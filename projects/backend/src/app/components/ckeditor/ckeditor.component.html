@@ -1,0 +1,18 @@
+<div id="ckeditor-custom">
+
+    <div class="form-row" >
+
+        <div class="form-group col-12">
+            <label>Description</label>
+            <ckeditor
+                [(ngModel)]="modelItem"
+                name="content"
+                (dataChange)="getContent($event)"
+                [config]="editorConfig" ></ckeditor>
+            <div class="invalid-feedback d-block" *ngIf="errorModelItem">
+                {{ errorModelItem }}
+            </div>
+        </div>
+    </div>
+
+</div>

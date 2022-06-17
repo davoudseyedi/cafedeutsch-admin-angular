@@ -1,0 +1,51 @@
+@import "../../../assets/scss/variables";
+
+body {
+  background-color: $page-auth-bg;
+}
+#auth {
+  height: 100vh;
+  overflow-x: hidden;
+
+  #auth-right {
+    height: 100%;
+    background:  url('/assets/images/bg/bg.jpg'), $page-auth-right-bg;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  #auth-left {
+    padding: 5rem 8rem;
+
+    .auth-title {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+    .auth-subtitle {
+      font-size: 1.7rem;
+      line-height: 2.5rem;
+      color: #a8aebb;
+    }
+    .auth-logo {
+      margin-bottom: 7rem;
+      img {
+        height: 2rem;
+      }
+    }
+    @media screen and (max-width: 767px) {
+      padding: 5rem ;
+    }
+    @media screen and (max-width: 576px) {
+      padding: 5rem 3rem;
+    }
+  }
+}
+
+body.theme-dark {
+  @import '../../../assets/scss/themes/dark/variables-dark';
+  @debug $page-auth-right-bg;
+
+  #auth-right {
+    background:  url('/assets/images/bg/4853433.png'), $page-auth-right-bg;
+  }
+}

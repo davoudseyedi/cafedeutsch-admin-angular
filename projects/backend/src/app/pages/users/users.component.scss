@@ -1,0 +1,8 @@
+@import "../../../assets/scss/variables";
+
+.image img {
+  border-radius: 50%;
+  border: 2px solid $gray-300;
+  width: 48px;
+  height: 48px;
+}

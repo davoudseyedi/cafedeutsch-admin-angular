@@ -1,0 +1,26 @@
+// Import mazer Variables
+@import "./variables";
+
+// Bootstrap + Icons
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-icons/font/bootstrap-icons";
+
+//FontAwesome
+@import "./pages/fontawesome";
+
+// Fix icon placement
+body .bi::before, [class^=bi-]::before, [class*=" bi-"]::before {
+    vertical-align: baseline;
+}
+
+// Import fonts
+@import "./fonts";
+
+//theme dark
+//@import "./themes/dark/app-dark";
+
+// Perfect Scrollbar
+@import "~perfect-scrollbar/css/perfect-scrollbar.css";
+
+// Mazer CSS
+@import "./mazer";

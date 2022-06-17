@@ -1,0 +1,127 @@
+<div class="page-heading d-flex align-items-center">
+  <h3>{{ user.id != 0 ? user.title : 'Create User'}}</h3>
+  <a class="ms-auto d-flex align-items-center" routerLink="/panel/users">
+    <i class="bi bi-arrow-left me-2"></i>
+    Back to Users</a>
+</div>
+<section class="section">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-8">
+          <div class="row">
+            <h4>User Information</h4>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="first_name">First name</label>
+                <input type="text" class="form-control"
+                       [(ngModel)]="user.first_name"
+                       (keyup)="errorModel.first_name = ''"
+                       [class.is-invalid]="errorModel.first_name"
+                       id="first_name">
+                <div class="invalid-feedback" *ngIf="errorModel.first_name">{{ errorModel.first_name }}</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="last_name">Last name</label>
+                <input type="text" class="form-control"
+                       [(ngModel)]="user.last_name"
+                       (keyup)="errorModel.last_name = ''"
+                       [class.is-invalid]="errorModel.last_name"
+                       id="last_name">
+                <div class="invalid-feedback" *ngIf="errorModel.last_name">{{ errorModel.last_name }}</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="mobile_number">Mobile number</label>
+                <input type="tel" class="form-control"
+                       [(ngModel)]="user.mobile_number"
+                       (keyup)="errorModel.mobile_number = ''"
+                       [class.is-invalid]="errorModel.mobile_number"
+                       id="mobile_number">
+                <div class="invalid-feedback" *ngIf="errorModel.mobile_number">{{ errorModel.mobile_number }}</div>
+              </div>
+            </div>
+
+            <h4>Account Info</h4>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control"
+                       [(ngModel)]="user.email"
+                       (keyup)="errorModel.email = ''"
+                       [class.is-invalid]="errorModel.email"
+                       id="email">
+                <div class="invalid-feedback" *ngIf="errorModel.email">{{ errorModel.email }}</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="password">Passowrd</label>
+                <input type="password" class="form-control"
+                       [(ngModel)]="user.password"
+                       (keyup)="errorModel.password = ''"
+                       [class.is-invalid]="errorModel.password"
+                       id="password">
+                <div class="invalid-feedback" *ngIf="errorModel.password">{{ errorModel.password }}</div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="roles">Role</label>
+                <select name="roles" class="form-control form-select" [(ngModel)]="user.roles" id="roles">
+                  <option value="Admin">Admin</option>
+                  <option value="Reader">Reader</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="errorModel.roles">{{ errorModel.roles }}</div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" name="active" role="switch" id="active"
+                         [(ngModel)]="user.active"
+                         (keyup)="errorModel.active = ''"
+                         [class.is-invalid]="errorModel.active">
+                  <label class="form-check-label" for="active">Active</label>
+                </div>
+                <div class="invalid-feedback" *ngIf="errorModel.active">{{ errorModel.active }}</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="row">
+            <h4>Profile avatar</h4>
+            <div class="col-md-12">
+              <div class="form-group d-flex align-items-center">
+                <img *ngIf="user.profile_pic" class="me-2" src="{{ user.profile_pic }}" width="110px" alt="">
+                <img *ngIf="!user.profile_pic" class="me-2" src="/assets/images/avatar.png" alt="post-photo" width="64px">
+                <div class="file-upload">
+                  <label for="profile_pic">Image</label>
+                  <input type="file" class="form-control" name="profile_pic" id="profile_pic" (change)="uploadPhoto($event)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action -->
+      <div class="row">
+        <div class="d-flex">
+          <app-btn [className]="'btn btn-primary'" [disabled]="btnLoading" [loading]="btnLoading" (click)="submit()">
+            <i class="bi bi-check"></i>
+            Save</app-btn>
+<!--          <a *ngIf="user.id != 0" class="btn btn-danger ms-2 me-auto" (click)="delete()"><i class="bi bi-trash me-2"></i>Delete</a>-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

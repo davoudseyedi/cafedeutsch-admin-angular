@@ -1,0 +1,91 @@
+<div class="page-heading">
+  <h3>Users</h3>
+</div>
+<div id="users">
+  <section class="section">
+    <div class="card">
+      <div class="card-header">
+        <a routerLink="/panel/users/add" class="btn btn-success float-end">
+          <i class="bi bi-plus-circle"></i>
+          Create User</a>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <div class="table-responsive" *ngIf="!loading && users.length > 0">
+            <table class="table table-striped table-hover">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Status</th>
+                <th>Created at</th>
+                <th>Modified at</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let user of users;let i = index">
+                <td>{{ i+1 }}</td>
+                <td>
+                  <div class="d-flex">
+                    <div class="image me-2">
+                      <img *ngIf="user.profile_pic" src="{{ user.profile_pic }}" alt="profile_pic" width="64px">
+                      <img *ngIf="!user.profile_pic" src="/assets/images/avatar.png" alt="post-photo" width="64px">
+                    </div>
+                    <div class="info">
+                      <a routerLink="/panel/users/{{ user.id }}">{{ user.full_name }}
+                        <span class="badge bg-info" *ngIf="user.roles == 'Admin'">{{ user.roles }}</span>
+                        <span class="badge bg-secondary" *ngIf="user.roles == 'Reader'">{{ user.roles }}</span>
+                      </a>
+                      <p class="m-0">{{ user.email }}</p>
+                    </div>
+                  </div>
+
+                </td>
+                <td>
+                  {{ user.mobile_number }}
+                </td>
+                <td>
+                  <span class="badge bg-success" *ngIf="user.active">Active</span>
+                  <span class="badge bg-danger" *ngIf="!user.active">Blocked</span>
+                </td>
+                <td>{{ user.createdAt | date: 'MMM d, y - h:mm:ss a'}}</td>
+                <td>{{ user.updatedAt | date: 'MMM d, y - h:mm:ss a'}}</td>
+                <td>
+                  <a routerLink="/panel/users/{{ user.id }}" class="btn btn-warning me-2">
+                    <i class="bi bi-pencil"></i>
+                    Edit</a>
+<!--                  <a class="btn btn-danger" (click)="openModal(post.id)">-->
+<!--                    <i class="bi bi-trash"></i>-->
+<!--                    Delete-->
+<!--                  </a>-->
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="container" *ngIf="loading">
+            <div class="row">
+              <div class="col-12 text-center pt-5">
+                <app-loading [type]="1"></app-loading>
+              </div>
+            </div>
+          </div>
+          <div class="row"  *ngIf="!loading && users.length == 0">
+            <div class="col-12">
+              <div class="alert alert-warning">
+                no users found.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+
+<!--<confirm-modal (action)="delete($event)"></confirm-modal>-->

@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./assets/scss/app";
+@import "./assets/scss/themes/dark/app-dark";
+
+// toast
+@import "~ngx-toastr/toastr.css";
+
+
+// Global
+@import "./assets/scss/global.css";
+
+//iconly
+@import "./assets/scss/iconly";

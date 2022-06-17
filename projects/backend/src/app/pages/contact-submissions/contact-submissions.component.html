@@ -1,0 +1,70 @@
+<div class="page-heading">
+  <h3>Contact Submissions</h3>
+</div>
+<div id="submissions">
+  <section class="section">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="table-responsive" *ngIf="!loading && submissions.length > 0">
+            <table class="table table-striped table-hover">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Full name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Submitted at</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of submissions;let i = index">
+                <td>{{ i+1 }}</td>
+                <td>
+                  {{ item.full_name}}
+                </td>
+                <td>
+                  {{ item.email }}
+                </td>
+                <td>
+                  <p [innerHTML]="item.content"></p>
+                </td>
+                <td>{{ item.createdAt | date: 'MMM d, y - h:mm:ss a'}}</td>
+                <td>
+                  <a routerLink="/panel/submissions/{{ item.id }}" class="btn btn-info me-2">
+                    <i class="bi bi-eye"></i>
+                    Preview</a>
+                  <a class="btn btn-danger" (click)="openModal(item.id)">
+                    <i class="bi bi-trash"></i>
+                    Delete
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="container" *ngIf="loading">
+            <div class="row">
+              <div class="col-12 text-center pt-5">
+                <app-loading [type]="1"></app-loading>
+              </div>
+            </div>
+          </div>
+          <div class="row"  *ngIf="!loading && submissions.length == 0">
+            <div class="col-12">
+              <div class="alert alert-warning">
+                no submissions found.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+
+<confirm-modal (action)="delete($event)"></confirm-modal>

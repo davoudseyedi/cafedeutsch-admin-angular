@@ -1,0 +1,129 @@
+@import "../../../assets/scss/variables";
+.modal{
+    animation: slide-up  0.4s;
+}
+.modal-content {
+    border: 0px solid rgba(0,0,0,.2);
+    position: relative;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: auto;
+    @media(max-width: 768px){
+        position: absolute;
+    }
+    h4 {
+        color: rgba(61, 76, 99, 42%);
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+    ul {
+        text-align: center;
+        padding-right: 0px;
+        li {
+            display: inline-block;
+            border: 1px solid #707070;
+            border-radius: 18px;
+            padding: 0.25rem;
+            margin-left: 5px;
+            color: #3D4C63;
+            cursor: pointer;
+            span {
+                font-size: 13px;
+                font-weight: bold;
+            }
+        }
+        li.active {
+            background-color: #347AF0;
+            border: 1px solid #347AF0;
+            color: white;
+            span {
+                color: white;
+            }
+        }
+        li.deactive {
+            background-color: #d6d6d6;
+            color: #a5a5a5;
+            border: 1px solid #d6d6d6;
+            span {
+                color: #a5a5a5;
+            }
+        }
+    }
+    span.package-description {
+        color: #bcbcbc;
+    }
+}
+.modal-header {
+    border-bottom: 1px solid $gray-300;
+    background:transparent;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    h5 {
+        color: $dark;
+        font-weight: 800;
+        font-size: 18px;
+        margin-bottom: 0;
+    }
+    .btn-close{
+        position: absolute;
+        left: 1rem;
+        border: none;
+    }
+}
+.modal-footer {
+    justify-content: center;
+    border-top: 0px solid #e3e3e3;
+}
+.deactive {
+    pointer-events: none;
+}
+.btn-primary {
+    span {
+        white-space: nowrap;
+    }
+}
+
+@media(max-width: 575.98px) {
+    .modal.modal-lg  .modal-dialog{
+        max-width: unset !important;
+    }
+    .modal-content {
+        border: none;
+        border-radius: 0;
+    }
+    .modal-dialog-centered {
+        align-items: flex-end;
+    }
+    .modal-dialog {
+        margin: 0px;
+    }
+    .modal-dialog-centered {
+        min-height: 100%;
+    }
+}
+
+@keyframes slide-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    100% {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+}
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    100% {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+}
+

@@ -1,0 +1,38 @@
+<header class="mb-3">
+ <div class="row">
+   <a href="#" class="burger-btn">
+     <i class="bi bi-justify fs-3"></i>
+   </a>
+   <div class="col-12 col-md-10">
+     <form action="">
+       <div class="form-group position-relative has-icon-right">
+         <input type="text" class="form-control form-control-xl" placeholder="search ...">
+         <div class="form-control-icon">
+           <i class="bi bi-search"></i>
+         </div>
+       </div>
+     </form>
+   </div>
+   <div class="col-12 col-md-2 text-right d-flex align-items-center dropdown">
+
+     <div class="d-flex align-items-center dropdown-toggle w-100" role="button" [id]="'dropdownMenuLink'" [attr.data-bs-toggle]="'dropdown'" [attr.aria-expanded]="false">
+       <div class="avatar ">
+         <img *ngIf="user['profile_pic']" src="{{ user['profile_pic'] }}"  alt="image-{{ user['first_name'] }}">
+         <img *ngIf="!user['profile_pic']" src="/assets/images/avatar.png" alt="image-{{ user['first_name'] }}">
+       </div>
+       <div class="info m-auto">
+         <h6 class="m-0">{{ user['full_name'] }}</h6>
+         <p class="m-0 text-sm">{{ user['mobile_number'] }}</p>
+       </div>
+
+     </div>
+     <ul class="dropdown-menu" [attr.aria-labelledby]="'dropdownMenuLink'">
+       <li><a class="dropdown-item" routerLink="/panel/users/{{ user['id'] }}">Edit profile</a></li>
+       <li><hr class="dropdown-divider"></li>
+       <li><a class="dropdown-item cursor-pointer" (click)="logout()"><span class="fas fa-sign-out"></span> Logout</a></li>
+     </ul>
+   </div>
+
+ </div>
+</header>
+

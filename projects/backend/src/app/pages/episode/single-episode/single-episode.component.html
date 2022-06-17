@@ -1,0 +1,157 @@
+<div class="page-heading d-flex align-items-center" *ngIf="!loading">
+  <h3>{{ episode.id != 0 ? episode.title : 'Create Episode'}}</h3>
+  <a class="ms-auto d-flex align-items-center" routerLink="/panel/episodes">
+    <i class="bi bi-arrow-left me-2"></i>
+    Back to Episodes</a>
+</div>
+<section class="section">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control"
+                   name="title"
+                   [(ngModel)]="episode.title"
+                   (keyup)="errorModel.title = ''"
+                   [class.is-invalid]="errorModel.title"
+                   id="title">
+            <div class="invalid-feedback" *ngIf="errorModel.title">{{ errorModel.title }}</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="season">Season</label>
+            <select name="season" class="form-control form-select" [(ngModel)]="season"
+                    (keyup)="errorModel.season = ''"
+                    [class.is-invalid]="errorModel.season"
+                    id="season">
+              <ng-container *ngIf="episode.id == 0">
+                \                <option [value]="season.id" *ngFor="let  season of seasons">{{ season.title }}</option>
+              </ng-container>
+              <ng-container *ngIf="episode.id != 0">
+                <option [value]="season.id" *ngFor="let  season of seasons" [selected]="season.id == episode.season?.id">{{ season.title }}</option>
+              </ng-container>
+            </select>
+            <div class="invalid-feedback" *ngIf="errorModel.season">{{ errorModel.season }}</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select name="category" class="form-control form-select" [(ngModel)]="category"
+                    (keyup)="errorModel.category = ''"
+                    [class.is-invalid]="errorModel.category"
+                    id="category">
+              <ng-container *ngIf="episode.id == 0">
+                \                <option [value]="cat.id" *ngFor="let  cat of cats">{{ cat.title }}</option>
+              </ng-container>
+              <ng-container *ngIf="episode.id != 0">
+                <option [value]="cat.id" *ngFor="let  cat of cats" [selected]="cat.id == episode.category?.id">{{ cat.title }}</option>
+              </ng-container>
+            </select>
+            <div class="invalid-feedback" *ngIf="errorModel.category">{{ errorModel.category }}</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="publish_date">Publish Date (Optional)</label>
+            <input type="datetime-local" class="form-control"
+                   [(ngModel)]="episode.publish_date"
+                   (keyup)="errorModel.publish_date = ''"
+                   [class.is-invalid]="errorModel.publish_date"
+                   id="publish_date">
+            <div class="invalid-feedback" *ngIf="errorModel.publish_date">{{ errorModel.publish_date }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <div class="form-group d-flex align-items-center">
+            <img *ngIf="episode.episodeImage" class="me-2" src="{{ episode.episodeImage }}" width="110px" alt="">
+            <img *ngIf="!episode.episodeImage" class="me-2" src="/assets/images/default.jpg" alt="episode-photo" width="64px">
+            <div class="file-upload">
+              <label for="category">Image</label>
+              <input type="file" class="form-control"
+                     name="episodeImage"
+                     id="image"
+                     (keyup)="errorModel.episodeImage = ''"
+                     [class.is-invalid]="errorModel.episodeImage"
+                     (change)="uploadPhoto($event)">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="audio-upload">
+              <label for="episodeAudioFile">Episode Audio File</label>
+              <input type="file" class="form-control"
+                     (keyup)="errorModel.episodeAudioFile = ''"
+                     [class.is-invalid]="errorModel.episodeAudioFile"
+                     (change)="uploadAudio($event)"
+                     id="episodeAudioFile">
+              <div class="invalid-feedback" *ngIf="errorModel.episodeAudioFile">{{ errorModel.episodeAudioFile }}</div>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="episode.episodeAudioFile">
+          <div class="display-audio">
+            <audio  controls>
+              <source [src]="episode.episodeAudioFile" [attr.type]="'audio/mp3'">
+            </audio>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <app-ckeditor
+              [modelItem]="episode.description"
+              [errorModelItem]="errorModel.description"
+              (content)="episode.description = $event"
+            ></app-ckeditor>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" name="published" role="switch" id="published"
+                     [(ngModel)]="episode.published"
+                     (keyup)="errorModel.published = ''"
+                     [class.is-invalid]="errorModel.published">
+              <label class="form-check-label" for="published">Published</label>
+            </div>
+            <div class="invalid-feedback" *ngIf="errorModel.published">{{ errorModel.published }}</div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" name="featured" role="switch" id="featured"
+                     [(ngModel)]="episode.featured"
+                     (keyup)="errorModel.featured = ''"
+                     [class.is-invalid]="errorModel.featured">
+              <label class="form-check-label" for="featured">Featured</label>
+            </div>
+            <div class="invalid-feedback" *ngIf="errorModel.featured">{{ errorModel.featured }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action -->
+      <div class="row">
+        <div class="d-flex">
+          <app-btn [className]="'btn btn-primary'" [disabled]="loading" [loading]="loading" (click)="submit()">
+            <i class="bi bi-check"></i>
+            Save</app-btn>
+          <a *ngIf="episode.id != 0" class="btn btn-danger ms-2 me-auto" (click)="delete()"><i class="bi bi-trash me-2"></i>Delete</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
