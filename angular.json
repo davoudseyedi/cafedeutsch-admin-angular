@@ -49,7 +49,7 @@
               "jalali-moment",
               "lottie-web"
             ],
-            "outputPath": "dist/backend",
+            "outputPath": "dist",
             "index": "projects/backend/src/index.html",
             "main": "projects/backend/src/main.ts",
             "polyfills": "projects/backend/src/polyfills.ts",
@@ -71,13 +71,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "128kb",
+                  "maximumError": "256kb"
                 }
               ],
               "fileReplacements": [
