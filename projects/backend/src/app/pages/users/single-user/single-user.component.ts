@@ -14,6 +14,7 @@ import {HelpersService} from "../../../services/helpers.service";
 export class SingleUserComponent implements OnInit {
 
   public btnLoading = false;
+  public imgLoading = false;
 
   public user:any = {
     id:0,
@@ -86,6 +87,7 @@ export class SingleUserComponent implements OnInit {
 
   public uploadPhoto(e:any){
 
+    this.imgLoading = true;
     this.profile_pic = e.target.files && e.target.files.length > 0 ? e.target.files[0] : null;
 
     let formData = new FormData();
@@ -190,7 +192,7 @@ export class SingleUserComponent implements OnInit {
 
   private onLoadUploadPhotoSuccess(response:any){
 
-    this.btnLoading = false;
+    this.imgLoading = false;
     this.user.profile_pic = response.filePath;
     this.alertService.alertSuccess('The avatar successfully uploaded.');
 
@@ -198,7 +200,7 @@ export class SingleUserComponent implements OnInit {
 
   private onLoadUploadPhotoError(error:any){
 
-    this.btnLoading = false;
+    this.imgLoading = false;
     if(error.statusCode == 422){
       this.helperService.handleResponseError(error,this.errorModel,'first_name')
     }else{

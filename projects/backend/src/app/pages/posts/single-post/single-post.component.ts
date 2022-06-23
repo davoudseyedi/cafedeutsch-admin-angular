@@ -14,6 +14,7 @@ import {HelpersService} from "../../../services/helpers.service";
 export class SinglePostComponent implements OnInit {
 
   public loading = false;
+  public imgLoading = false;
   public post:any = {
     id: 0,
     title: '',
@@ -75,6 +76,7 @@ export class SinglePostComponent implements OnInit {
 
   public uploadPhoto(e:any){
 
+    this.imgLoading = true;
     this.image = e.target.files && e.target.files.length > 0 ? e.target.files[0] : null;
 
     let formData = new FormData();
@@ -254,7 +256,7 @@ export class SinglePostComponent implements OnInit {
 
   private onLoadUploadPhotoSuccess(response:any){
 
-    this.loading = false;
+    this.imgLoading = false;
     this.post.mainImageUrl = response.filePath;
     this.alertService.alertSuccess('The Image successfully uploaded.');
 
@@ -262,7 +264,7 @@ export class SinglePostComponent implements OnInit {
 
   private onLoadUploadPhotoError(error:any){
 
-    this.loading = false;
+    this.imgLoading = false;
     if(error.statusCode == 422){
       this.helperService.handleResponseError(error,this.errorModel,'title')
     }else{

@@ -103,7 +103,12 @@
                 <img *ngIf="!user.profile_pic" class="me-2" src="/assets/images/avatar.png" alt="post-photo" width="64px">
                 <div class="file-upload">
                   <label for="profile_pic">Image</label>
-                  <input type="file" class="form-control" name="profile_pic" id="profile_pic" (change)="uploadPhoto($event)">
+                  <div class="d-flex align-items-center">
+                    <input type="file" class="form-control" name="profile_pic" id="profile_pic" (change)="uploadPhoto($event)">
+                    <div class="spinner-border spinner-border-sm ms-2" role="status" *ngIf="imgLoading">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -14,6 +14,8 @@ import {Language} from "../../../services/language";
 export class SingleEpisodeComponent implements OnInit {
 
   public loading = false;
+  public audLoading = false;
+  public imgLoading = false;
   public episode:any = {
     id: 0,
     title: '',
@@ -140,6 +142,7 @@ export class SingleEpisodeComponent implements OnInit {
 
   public uploadPhoto(e:any){
 
+    this.imgLoading = true;
     this.image = e.target.files && e.target.files.length > 0 ? e.target.files[0] : null;
 
     let formData = new FormData();
@@ -153,6 +156,7 @@ export class SingleEpisodeComponent implements OnInit {
 
   public uploadAudio(e:any){
 
+    this.audLoading = true;
     this.audio = e.target.files && e.target.files.length > 0 ? e.target.files[0] : null;
 
     let formData = new FormData();
@@ -299,7 +303,7 @@ export class SingleEpisodeComponent implements OnInit {
 
   private onLoadUploadPhotoSuccess(response:any){
 
-    this.loading = false;
+    this.imgLoading = false;
     this.episode.episodeImage = response.filePath;
     this.alertService.alertSuccess('The Image successfully uploaded.');
 
@@ -307,7 +311,7 @@ export class SingleEpisodeComponent implements OnInit {
 
   private onLoadUploadPhotoError(error:any){
 
-    this.loading = false;
+    this.imgLoading = false;
     if(error.statusCode == 422){
       this.helperService.handleResponseError(error,this.errorModel,'title')
     }else{
@@ -319,7 +323,7 @@ export class SingleEpisodeComponent implements OnInit {
 
   private onLoadUploadAudioSuccess(response:any){
 
-    this.loading = false;
+    this.audLoading = false;
     this.episode.episodeAudioFile = response.filePath;
     this.alertService.alertSuccess('The Audio File successfully uploaded.');
 
@@ -327,7 +331,7 @@ export class SingleEpisodeComponent implements OnInit {
 
   private onLoadUploadAudioError(error:any){
 
-    this.loading = false;
+    this.audLoading = false;
     if(error.statusCode == 422){
       this.helperService.handleResponseError(error,this.errorModel,'title')
     }else{

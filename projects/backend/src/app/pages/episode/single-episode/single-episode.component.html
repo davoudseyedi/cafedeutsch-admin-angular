@@ -73,12 +73,17 @@
             <img *ngIf="!episode.episodeImage" class="me-2" src="/assets/images/default.jpg" alt="episode-photo" width="64px">
             <div class="file-upload">
               <label for="category">Image</label>
-              <input type="file" class="form-control"
-                     name="episodeImage"
-                     id="image"
-                     (keyup)="errorModel.episodeImage = ''"
-                     [class.is-invalid]="errorModel.episodeImage"
-                     (change)="uploadPhoto($event)">
+              <div class="d-flex align-items-center">
+                <input type="file" class="form-control"
+                       name="episodeImage"
+                       id="image"
+                       (keyup)="errorModel.episodeImage = ''"
+                       [class.is-invalid]="errorModel.episodeImage"
+                       (change)="uploadPhoto($event)">
+                <div class="spinner-border spinner-border-sm ms-2" role="status" *ngIf="imgLoading">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -86,11 +91,16 @@
           <div class="form-group">
             <div class="audio-upload">
               <label for="episodeAudioFile">Episode Audio File</label>
-              <input type="file" class="form-control"
-                     (keyup)="errorModel.episodeAudioFile = ''"
-                     [class.is-invalid]="errorModel.episodeAudioFile"
-                     (change)="uploadAudio($event)"
-                     id="episodeAudioFile">
+              <div class="d-flex align-items-center">
+                <input type="file" class="form-control"
+                       (keyup)="errorModel.episodeAudioFile = ''"
+                       [class.is-invalid]="errorModel.episodeAudioFile"
+                       (change)="uploadAudio($event)"
+                       id="episodeAudioFile">
+                <div class="spinner-border spinner-border-sm ms-2" role="status" *ngIf="audLoading">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
               <div class="invalid-feedback" *ngIf="errorModel.episodeAudioFile">{{ errorModel.episodeAudioFile }}</div>
 
             </div>
@@ -102,6 +112,7 @@
             <audio  controls>
               <source [src]="episode.episodeAudioFile" [attr.type]="'audio/mp3'">
             </audio>
+
           </div>
         </div>
       </div>

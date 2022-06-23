@@ -43,7 +43,12 @@
             <img *ngIf="!post.mainImageUrl" class="me-2" src="/assets/images/default.jpg" alt="post-photo" width="64px">
             <div class="file-upload">
               <label for="category">Image</label>
-              <input type="file" class="form-control" name="mainImageUrl" id="image" (change)="uploadPhoto($event)">
+             <div class="d-flex align-items-center">
+               <input type="file" class="form-control" name="mainImageUrl" id="image" (change)="uploadPhoto($event)">
+               <div class="spinner-border spinner-border-sm ms-2" role="status" *ngIf="imgLoading">
+                 <span class="visually-hidden">Loading...</span>
+               </div>
+             </div>
             </div>
           </div>
         </div>
