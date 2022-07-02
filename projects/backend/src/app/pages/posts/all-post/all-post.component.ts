@@ -63,7 +63,7 @@ export class AllPostComponent implements OnInit {
   private onLoadGetPostsSuccess(response:any){
 
     this.loading = false;
-    this.posts = response;
+    this.posts = response.data;
 
   }
 

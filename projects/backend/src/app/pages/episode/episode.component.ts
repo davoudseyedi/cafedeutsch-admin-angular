@@ -58,7 +58,7 @@ export class EpisodeComponent implements OnInit {
   private onLoadGetEpisodesSuccess(response:any){
 
     this.loading = false;
-    this.episodes = response;
+    this.episodes = response.data;
 
   }
 

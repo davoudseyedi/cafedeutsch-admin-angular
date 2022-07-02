@@ -58,7 +58,7 @@ export class ContactSubmissionsComponent implements OnInit {
   private onLoadGetSubmissionsSuccess(response:any){
 
     this.loading = false;
-    this.submissions = response;
+    this.submissions = response.data;
 
   }
 

@@ -37,7 +37,7 @@ export class UsersComponent implements OnInit {
 
   private onLoadUsersSuccess(response:any){
     this.loading = false;
-    this.users = response;
+    this.users = response.data;
   }
   private onLoadUsersError(error:any){
     this.loading = false;
