@@ -4,6 +4,8 @@ import {AdminApiService} from "../../services/api.service";
 import {MetaService} from "../../services/meta.service";
 import {AlertService} from "../../services/alert.service";
 import {Language} from "../../services/language";
+import {HelpersService} from "../../services/helpers.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-contact-submissions',
@@ -18,13 +20,62 @@ export class ContactSubmissionsComponent implements OnInit {
 
   public submissions: any[] = [];
 
+  public paginationModel: any = {
+    currentPage: 1,
+    total: 0,
+    perPage: 25
+  };
+
+  public filterModel: any = {
+    search: '',
+    sort: 'createdAt',
+    sortDirection: 'DESC',
+    status: ''
+  };
+
+  public qParams: any = {
+    search: '',
+    perPage: '',
+    currentPage: '',
+    sort: '',
+    sortDirection: '',
+  };
+
   constructor(private adminApiService: AdminApiService,
               private metaService: MetaService,
+              private helperService: HelpersService,
+              private route: ActivatedRoute,
+              private router: Router,
               private alertService:AlertService) { }
 
   ngOnInit(): void {
     this.metaService.setTitle(Language.getTitle('CONTACT_SUBMISSIONS'));
     this.metaService.setDescription(Language.getDescription('CONTACT_SUBMISSIONS'));
+
+    let params = this.route.snapshot.queryParamMap;
+
+    if (params.get('search')) {
+
+      this.filterModel.search = params.get('search');
+      this.qParams.search = params.get('search');
+
+    }
+
+    if (params.get('sortDirection')) {
+
+      this.filterModel.sortDirection = params.get('sortDirection');
+      this.qParams.sortDirection = params.get('sortDirection');
+
+    }
+
+    if (params.get('sort')) {
+
+      this.filterModel.sort = params.get('sort');
+      this.qParams.sort = params.get('sort');
+
+    }
+
+
     this.getSubmissions();
   }
 
@@ -46,10 +97,21 @@ export class ContactSubmissionsComponent implements OnInit {
 
   }
 
+  public onChangePageClick(page: any) {
+
+    this.qParams.currentPage = page + '';
+    this.helperService.changeRouteParams('/panel/submissions', this.qParams);
+
+    this.paginationModel.currentPage = page;
+    this.getSubmissions();
+
+  }
+
+
   private getSubmissions(){
     this.loading = true;
 
-    this.adminApiService.adminGetContactSubmissions().subscribe({
+    this.adminApiService.adminGetContactSubmissions(this.paginationModel.currentPage,this.paginationModel.perPage,this.filterModel.sortDirection).subscribe({
       next: this.onLoadGetSubmissionsSuccess.bind(this),
       error: this.onLoadGetSubmissionsError.bind(this)
     });
@@ -58,7 +120,13 @@ export class ContactSubmissionsComponent implements OnInit {
   private onLoadGetSubmissionsSuccess(response:any){
 
     this.loading = false;
-    this.submissions = response.data;
+
+    this.paginationModel.currentPage = response.meta.currentPage;
+    this.paginationModel.total = response.meta.totalItems;
+    this.paginationModel.perPage = response.meta.itemsPerPage;
+
+
+    this.submissions = response.items;
 
   }
 

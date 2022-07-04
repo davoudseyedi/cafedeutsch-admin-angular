@@ -4,6 +4,8 @@ import {AlertService} from "../../../services/alert.service";
 import {Language} from "../../../services/language";
 import {MetaService} from "../../../services/meta.service";
 import {ConfirmModalComponent} from "../../../components/confirm-modal/confirm-modal.component";
+import {HelpersService} from "../../../services/helpers.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-all-post',
@@ -20,14 +22,63 @@ export class AllPostComponent implements OnInit {
   public posts:any = [];
   public loading = false;
 
+  public paginationModel: any = {
+    currentPage: 1,
+    total: 0,
+    perPage: 25
+  };
+
+  public filterModel: any = {
+    search: '',
+    sort: 'createdAt',
+    sortDirection: 'DESC',
+    status: ''
+  };
+
+  public qParams: any = {
+    search: '',
+    perPage: '',
+    currentPage: '',
+    sort: '',
+    sortDirection: '',
+  };
+
   constructor(private adminApiService: AdminApiService,
               private metaService: MetaService,
+              private helperService: HelpersService,
+              private route: ActivatedRoute,
+              private router: Router,
               private alertService:AlertService) { }
 
   ngOnInit(): void {
 
     this.metaService.setTitle(Language.getTitle('POSTS'));
     this.metaService.setDescription(Language.getDescription('POSTS'));
+
+
+    let params = this.route.snapshot.queryParamMap;
+
+    if (params.get('search')) {
+
+      this.filterModel.search = params.get('search');
+      this.qParams.search = params.get('search');
+
+    }
+
+    if (params.get('sortDirection')) {
+
+      this.filterModel.sortDirection = params.get('sortDirection');
+      this.qParams.sortDirection = params.get('sortDirection');
+
+    }
+
+    if (params.get('sort')) {
+
+      this.filterModel.sort = params.get('sort');
+      this.qParams.sort = params.get('sort');
+
+    }
+
     this.getPosts();
   }
 
@@ -35,7 +86,7 @@ export class AllPostComponent implements OnInit {
 
     this.loading = true;
 
-    this.adminApiService.adminGetBlog().subscribe({
+    this.adminApiService.adminGetBlog(this.paginationModel.currentPage,this.paginationModel.perPage,this.filterModel.sortDirection).subscribe({
       next: this.onLoadGetPostsSuccess.bind(this),
       error: this.onLoadGetPostsError.bind(this)
     });
@@ -51,6 +102,17 @@ export class AllPostComponent implements OnInit {
     });
   }
 
+  public onChangePageClick(page: any) {
+
+    this.qParams.currentPage = page + '';
+    this.helperService.changeRouteParams('/panel/posts', this.qParams);
+
+    this.paginationModel.currentPage = page;
+    this.getPosts();
+
+  }
+
+
   public openModal(e:any){
 
     this.confirmModal.title = 'Delete action';
@@ -63,7 +125,13 @@ export class AllPostComponent implements OnInit {
   private onLoadGetPostsSuccess(response:any){
 
     this.loading = false;
-    this.posts = response.data;
+
+    this.paginationModel.currentPage = response.meta.currentPage;
+    this.paginationModel.total = response.meta.totalItems;
+    this.paginationModel.perPage = response.meta.itemsPerPage;
+
+
+    this.posts = response.items;
 
   }
 

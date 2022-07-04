@@ -1,0 +1,89 @@
+<div class="container-fluid"  *ngIf="!showMorePaginate">
+    <div class="row justify-content-center pt-2 pb-2">
+        <div class="col-12 col-xs-9 text-center  order-md-1 order-0">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-primary pagination-lg justify-content-center" *ngIf="firstPage !== lastPage">
+                <li class="page-item pointer">
+                    <span class="page-link" (click)="onPreviousClick()" *ngIf="!useHref && currentPage > 1">
+                        <i class="bi bi-chevron-left"></i>
+                    </span>
+
+                    <a class="page-link" [href]="pageUrl + (currentPage - 1)" *ngIf="useHref && currentPage > 1">
+                        <span class="bi bi-chevron-left"></span>
+                    </a>
+                </li>
+
+                <li class="page-item pointer" *ngIf="pageArray && pageArray[0] > 1">
+                    <a class="page-link pointer"
+                       *ngIf="useHref"
+                       [href]="pageUrl + firstPage + ''">{{ firstPage }}</a>
+                    <span *ngIf="!useHref" class="page-link pointer" (click)="onChangePageClick(firstPage)">
+                        {{ firstPage }}
+                    </span>
+                </li>
+
+                <li class="page-item pointer" *ngIf="pageArray && pageArray[0] > 2">
+                    <span class="page-link pointer">
+                        ...
+                    </span>
+                </li>
+
+                <ng-container *ngFor="let i of pageArray">
+
+                    <li class="page-item pointer" [class.active]="i == currentPage">
+                        <a class="page-link pointer"
+                           *ngIf="useHref"
+                           [href]="pageUrl + i + ''">{{ i }}</a>
+                        <span *ngIf="!useHref" class="page-link pointer" [class.active]="i == currentPage"
+                              (click)="onChangePageClick(i)">
+                            {{ i }}
+                        </span>
+                    </li>
+                </ng-container>
+
+                <li class="page-item" *ngIf="pageArray && pageArray[pageArray.length-1] < lastPage - 1">
+                    <span class="page-link pointer">
+                        ...
+                    </span>
+                </li>
+
+                <li class="page-item" *ngIf="pageArray && pageArray[pageArray.length-1] < lastPage">
+                    <a class="page-link pointer"
+                       *ngIf="useHref"
+                       [href]="pageUrl + lastPage + ''">{{ lastPage }}</a>
+                    <span *ngIf="!useHref" class="page-link pointer" (click)="onChangePageClick(lastPage)">
+                        {{ lastPage }}
+                    </span>
+                </li>
+                <li class="page-item pointer">
+                    <span class="page-link" (click)="onNextClick()"
+                          *ngIf="!useHref && pageArray.length > 1 && currentPage !== pageArray.length">
+                        <span class="bi bi-chevron-right"></span>
+
+                    </span>
+
+                    <a class="page-link" [href]="pageUrl + (currentPage + 1)"
+                       *ngIf="useHref && pageArray.length > 1 && currentPage !== pageArray.length">
+                        <span class="bi bi-chevron-right"></span>
+                    </a>
+                </li>
+            </ul>
+          </nav>
+        </div>
+    </div>
+</div>
+
+
+<div class="row pt-2 pb-2 text-center justify-content-center" *ngIf="showMorePaginate">
+    <div class="d-none d-sm-block col-sm-5">
+        <hr class="inline-middle w-100" />
+    </div>
+    <div class="col-12 col-sm-2">
+        <button class="btn btn-tertiary-primary btn-block" *ngIf="firstPage !== lastPage" (click)="onNextClick()">
+            مطالب بیشتر
+        </button>
+    </div>
+    <div class="d-none d-sm-block col-sm-5">
+        <hr class="inline-middle w-100" />
+    </div>
+</div>

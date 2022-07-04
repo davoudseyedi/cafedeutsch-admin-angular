@@ -41,9 +41,9 @@ export class AdminApiService {
 
   }
 
-  public adminGetUsers() {
+  public adminGetUsers(page=1,limit=25,sortDirection= '') {
 
-    return this.http.get(this.config.ADMIN_LIST_USERS);
+    return this.http.get(this.config.ADMIN_LIST_USERS + '?page=' + page + '&limit=' + limit + '&order=' + sortDirection);
 
   }
 
@@ -57,9 +57,9 @@ export class AdminApiService {
 
   // Post
 
-  public adminGetBlog() {
+  public adminGetBlog(page = 1, limit = 25, sortDirection = '') {
 
-    return this.http.get(this.config.ADMIN_GET_ALL_POSTS);
+    return this.http.get(this.config.ADMIN_GET_ALL_POSTS + '?page=' + page + '&limit=' + limit + '&order=' + sortDirection);
 
   }
 
@@ -137,9 +137,9 @@ export class AdminApiService {
 
   // Episodes
 
-  public adminGetEpisodes() {
+  public adminGetEpisodes(page = 1, limit = 25, sortDirection = '') {
 
-    return this.http.get(this.config.ADMIN_GET_ALL_EPISODES);
+    return this.http.get(this.config.ADMIN_GET_ALL_EPISODES + '?page=' + page + '&limit=' + limit + '&order=' + sortDirection);
 
   }
 
@@ -179,9 +179,9 @@ export class AdminApiService {
   }
 
   // Contact
-  public adminGetContactSubmissions() {
+  public adminGetContactSubmissions(page = 1,limit= 25,sortDirection = '') {
 
-    return this.http.get(this.config.ADMIN_GET_ALL_CONTACT_SUBMISSIONS);
+    return this.http.get(this.config.ADMIN_GET_ALL_CONTACT_SUBMISSIONS + '?page=' + page + '&limit=' + limit + '&order=' + sortDirection);
 
   }
 

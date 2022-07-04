@@ -79,6 +79,16 @@
               </div>
             </div>
           </div>
+          <div class="container" *ngIf="paginationModel.total > paginationModel.perPage">
+            <app-pagination
+              [currentPage]="paginationModel.currentPage"
+              [perPage]="paginationModel.perPage"
+              elementId="episodes-pagination"
+              (changePage)="onChangePageClick($event)"
+              [paginationModel]="paginationModel"
+              [qParams]="qParams"
+              [total]="paginationModel.total"></app-pagination>
+          </div>
         </div>
       </div>
     </div>

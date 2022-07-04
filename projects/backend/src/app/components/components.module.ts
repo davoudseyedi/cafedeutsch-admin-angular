@@ -13,6 +13,7 @@ import {CkeditorComponent} from "./ckeditor/ckeditor.component";
 import {CKEditorModule} from "ckeditor4-angular";
 import {ButtonDirective} from "./button/button.component";
 import {ConfirmModalComponent} from "./confirm-modal/confirm-modal.component";
+import { PaginationDirective } from './pagination/pagination-directive';
 
 export function playerFactory() {
   return player;
@@ -27,7 +28,8 @@ export function playerFactory() {
     SidebarComponent,
     CkeditorComponent,
     ButtonDirective,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    PaginationDirective
   ],
   exports: [
     HeaderComponent,
@@ -38,7 +40,8 @@ export function playerFactory() {
     CkeditorComponent,
     CKEditorModule,
     ButtonDirective,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    PaginationDirective
   ],
   imports: [
     CommonModule,

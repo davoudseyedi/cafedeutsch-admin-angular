@@ -32,6 +32,7 @@ import { TermComponent } from './pages/term/term.component';
 import { EpisodeComponent } from './pages/episode/episode.component';
 import { SingleEpisodeComponent } from './pages/episode/single-episode/single-episode.component';
 import { ContactSubmissionsComponent } from './pages/contact-submissions/contact-submissions.component';
+import {PaginationService} from "./components/pagination/pagination.service";
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { ContactSubmissionsComponent } from './pages/contact-submissions/contact
     AlertService,
     LinkService,
     AdminGuardService,
+    PaginationService
   ],
   bootstrap: [AppComponent]
 })
